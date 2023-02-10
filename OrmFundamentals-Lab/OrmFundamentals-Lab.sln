@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFirstDemo", "CodeFirstD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniORM", "MiniORM\MiniORM.csproj", "{8F3AF23E-DD0C-4657-8E7C-13378E220938}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniOrmApp", "MiniOrmApp\MiniOrmApp.csproj", "{D6E8886C-D249-4EAA-B90F-E52EEB78DC58}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{8F3AF23E-DD0C-4657-8E7C-13378E220938}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F3AF23E-DD0C-4657-8E7C-13378E220938}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F3AF23E-DD0C-4657-8E7C-13378E220938}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6E8886C-D249-4EAA-B90F-E52EEB78DC58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6E8886C-D249-4EAA-B90F-E52EEB78DC58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6E8886C-D249-4EAA-B90F-E52EEB78DC58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6E8886C-D249-4EAA-B90F-E52EEB78DC58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
