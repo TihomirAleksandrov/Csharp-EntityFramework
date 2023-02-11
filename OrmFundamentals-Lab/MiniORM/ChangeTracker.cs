@@ -64,7 +64,7 @@ namespace MiniORM
 				var entity = dbSet.Entities
 					.Single(e => GetPrimaryKeyValues(primaryKeys, e).SequenceEqual(primaryKeyValues));
 
-				var isModified = IsModified(entity, proxyEntity);
+				var isModified = IsModified(proxyEntity, entity);
 				if (isModified)
 				{
 					modifiedEntities.Add(entity);
