@@ -1,4 +1,5 @@
 ﻿using SoftUni.Data;
+using SoftUni.Models;
 using System;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace SoftUni
 
             using (context)
             {
-                Console.WriteLine(GetEmployeesFromResearchAndDevelopment(context));
+                Console.WriteLine(AddNewAdressToEmployee(context));
             }
         }
 
@@ -73,6 +74,42 @@ namespace SoftUni
             foreach (var employee in employees)
             {
                 sb.AppendLine($"{employee.FirstName} {employee.LastName} from {employee.DepartmentName} - {employee.Salary:f2}");
+            }
+
+            return sb.ToString();
+        }
+
+        //Task 6
+        public static string AddNewAdressToEmployee(SoftUniContext context)
+        {
+            var address = new Address()
+            {
+                AddressText = "Vitoshka 15",
+                TownId = 4
+            };
+
+
+            Employee nakovEmployee = context.Employees
+                .First(e => e.LastName == "Nakov");
+
+            nakovEmployee.Address = address;
+
+            context.SaveChanges();
+            
+            StringBuilder sb = new StringBuilder();
+
+            var addressTexts = context.Employees
+                .OrderByDescending(e => e.AddressId)
+                .Take(10)
+                .Select(e => new
+                {
+                    AddressText = e.Address.AddressText
+                })
+                .ToArray();
+
+            foreach (var text in addressTexts)
+            {
+                sb.AppendLine(text.AddressText);
             }
 
             return sb.ToString();
