@@ -114,5 +114,11 @@ namespace SoftUni
 
             return sb.ToString();
         }
+
+        //Task 7
+        public static string GetEmployeesInPeriod(SoftUniContext context)
+        {
+
+        }
     }
 }
