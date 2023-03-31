@@ -49,7 +49,9 @@
             //Task13
             //var result = GetTotalProfitByCategory(db);
             //Task14
-            var result = GetMostRecentBooks(db);
+            //var result = GetMostRecentBooks(db);
+            //Task16
+            var result = RemoveBooks(db);
 
             Console.WriteLine(result);
         }
@@ -309,6 +311,34 @@
             }
 
             return sb.ToString().TrimEnd();
+        }
+
+        public static void IncreasePrices(BookShopContext context)
+        {
+            var books = context.Books
+                .Where(b => b.ReleaseDate.Value.Year < 2010);
+
+            foreach (var book in books)
+            {
+                book.Price += 5;
+            }
+
+            context.SaveChanges();
+        }
+
+        public static int RemoveBooks(BookShopContext context)
+        {
+            int count = 0;
+
+            var books = context.Books
+                .Where(b => b.Copies < 4200);
+
+            count = books.Count();
+
+            context.Books.RemoveRange(books);
+            context.SaveChanges();
+
+            return count;
         }
     }
 }
