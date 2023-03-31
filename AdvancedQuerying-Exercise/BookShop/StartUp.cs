@@ -3,7 +3,9 @@
     using BookShop.Models.Enums;
     using Data;
     using Initializer;
+    using Microsoft.EntityFrameworkCore;
     using System;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
 
@@ -25,8 +27,10 @@
             //var year = int.Parse(Console.ReadLine());
             //string result = GetBooksNotReleasedIn(db, year);
             //Task6
+            //var input = Console.ReadLine();
+            //var result = GetBooksByCategory(db, input);
             var input = Console.ReadLine();
-            var result = GetBooksByCategory(db, input);
+            var result = GetBooksReleasedBefore(db, input);
 
             Console.WriteLine(result);
         }
@@ -102,6 +106,9 @@
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
             var categories = context.Books
+                .Include(x => x.BookCategories)
+                .ThenInclude(x => x.Category)
+                .ToArray()
                 .Where(b => b.BookCategories.Any(c => inputCategories.Contains(c.Category.Name.ToLower())))
                 .Select(b => b.Title)
                 .OrderBy(t => t)
@@ -109,5 +116,34 @@
 
             return String.Join(Environment.NewLine, categories);
         }
+
+        public static string GetBooksReleasedBefore(BookShopContext context, string date)
+        {
+
+
+            var convertedDate = DateTime.ParseExact(date, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+            StringBuilder sb = new StringBuilder();
+
+            var booksInfo = context.Books
+                .ToArray()
+                .Where(b => b.ReleaseDate < convertedDate)
+                .OrderByDescending(b => b.ReleaseDate)
+                .Select(b => new
+                {
+                    Title = b.Title,
+                    Edition = b.EditionType,
+                    Price = b.Price
+                })
+                .ToArray();
+
+            foreach (var book in booksInfo)
+            {
+                sb.AppendLine($"{book.Title} - {book.Edition} - ${book.Price:f2}");
+            }
+
+            return sb.ToString().TrimEnd();
+        }
+      
     }
 }
