@@ -36,8 +36,11 @@
             //var input = Console.ReadLine();
             //var result = GetAuthorNamesEndingIn(db, input);
             //Task9
+            //var input = Console.ReadLine();
+            //var result = GetBookTitlesContaining(db, input);
+            //Task10
             var input = Console.ReadLine();
-            var result = GetBookTitlesContaining(db, input);
+            var result = GetBooksByAuthor(db, input);
 
             Console.WriteLine(result);
         }
@@ -185,6 +188,29 @@
                 .ToArray();
 
             return string.Join(Environment.NewLine, books);
+        }
+
+        public static string GetBooksByAuthor(BookShopContext context, string input)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            var books = context.Books
+                .Include(x => x.Author)
+                .Where(b => b.Author.LastName.ToLower().StartsWith(input.ToLower()))
+                .OrderBy(b => b.BookId)
+                .Select(b => new
+                {
+                    Title = b.Title,
+                    AuthorFullName = $"{b.Author.FirstName} {b.Author.LastName}"
+                })
+                .ToArray();
+
+            foreach (var book in books)
+            {
+                sb.AppendLine($"{book.Title} ({book.AuthorFullName})");
+            }
+
+            return sb.ToString().TrimEnd();
         }
       
     }
